@@ -1,35 +1,44 @@
 package com.compass.scholarshipprogram.model;
 
-import jakarta.persistence.*;
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "squads")
 public class Squad {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Column(name="id")
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "squad_id")
+    private Long id;
 
-    @Column(name="name")
+    @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "squad")
-    private Classes classId;
+    @OneToMany(mappedBy = "squad", cascade={CascadeType.ALL})
+    private List<Classes> classId;
 
     public Squad() {
     }
 
-    public Squad(int id, String name, Classes classId) {
+    public Squad(Long id, String name, List<Classes> classId) {
         this.id = id;
         this.name = name;
         this.classId = classId;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -41,12 +50,12 @@ public class Squad {
         this.name = name;
     }
 
-    public Classes getClass_id() {
+    public List<Classes> getClassId() {
         return classId;
     }
 
-    public void setClass_id(Classes class_id) {
-        this.classId = class_id;
+    public void setClassId(List<Classes> classId) {
+        this.classId = classId;
     }
 
     @Override
@@ -57,4 +66,5 @@ public class Squad {
                 ", classId=" + classId +
                 '}';
     }
+
 }

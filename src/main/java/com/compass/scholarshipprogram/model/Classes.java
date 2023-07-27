@@ -7,25 +7,29 @@ import jakarta.persistence.*;
 public class Classes {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Column(name="id")
-    private int id;
+    @Column(name="class_id")
+    private Long id;
 
     @Column(name="name")
     private String name;
 
+    @ManyToOne
+    @JoinColumn(name="squad_id", nullable=false)
+    private Squad squad;
+
     public Classes() {
     }
 
-    public Classes(int id, String name) {
+    public Classes(Long id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

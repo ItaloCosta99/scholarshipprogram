@@ -4,5 +4,6 @@ import com.compass.scholarshipprogram.model.User;
 
 public interface UserService {
   public User save(User user);
-  public String findAll();
+
+  public Iterable<User> findAll();
 }
