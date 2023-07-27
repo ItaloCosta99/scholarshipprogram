@@ -1,10 +1,7 @@
 package com.compass.scholarshipprogram.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import com.compass.scholarshipprogram.model.User;
 import com.compass.scholarshipprogram.services.UserService;
@@ -27,6 +24,24 @@ public class UserController {
   public User save(@RequestBody User user) {
     User savedUser = userService.save(user);
     return savedUser;
+  }
+
+  @PutMapping("/save/{id}")
+  public User update(@PathVariable long id, @RequestBody User theUser) {
+
+    User existUser = userService.findById(id);
+
+    existUser.setName(theUser.getName());
+    existUser.setCity(theUser.getCity());
+    existUser.setRole(theUser.getRole());
+
+
+    return userService.save(existUser);
+  }
+
+  @DeleteMapping("/delete/{id}")
+  public void delete(@PathVariable long id) {
+    userService.deleteById(id);
   }
 
 }
