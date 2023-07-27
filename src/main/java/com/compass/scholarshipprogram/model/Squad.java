@@ -13,13 +13,13 @@ public class Squad {
     @Column(name="name")
     private String name;
 
-    @OneToMany(mappedBy = "squad")
-    private Classes classId;
+    @Column(name = "class_id")
+    private int classId;
 
     public Squad() {
     }
 
-    public Squad(int id, String name, Classes classId) {
+    public Squad(int id, String name, int classId) {
         this.id = id;
         this.name = name;
         this.classId = classId;
@@ -41,11 +41,11 @@ public class Squad {
         this.name = name;
     }
 
-    public Classes getClass_id() {
+    public int getClass_id() {
         return classId;
     }
 
-    public void setClass_id(Classes class_id) {
+    public void setClass_id(int class_id) {
         this.classId = class_id;
     }
 
