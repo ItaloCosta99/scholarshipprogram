@@ -1,11 +1,6 @@
 package com.compass.scholarshipprogram.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "users")
@@ -37,16 +32,18 @@ public class User {
   @Column(name = "role")
   private String role;
 
-  @Column(name = "class_id")
-  private int classId;
+  @ManyToOne
+  @JoinColumn(name = "class_id")
+  private Classes classId;
 
-  @Column(name = "squad_id")
-  private int squadId;
+  @ManyToOne
+  @JoinColumn(name = "squad_id")
+  private Squad squadId;
 
   public User() {
   }
 
-  public User(String name, String city, String role, int classId, int squadId) {
+  public User(String name, String city, String role, Classes classId, Squad squadId) {
     this.name = name;
     this.city = city;
     this.role = role;
@@ -86,19 +83,19 @@ public class User {
     this.role = role;
   }
 
-  public int getClassId() {
+  public Classes getClassId() {
     return classId;
   }
 
-  public void setClassId(int classId) {
+  public void setClassId(Classes classId) {
     this.classId = classId;
   }
 
-  public int getSquadId() {
+  public Squad getSquadId() {
     return squadId;
   }
 
-  public void setSquadId(int squadId) {
+  public void setSquadId(Squad squadId) {
     this.squadId = squadId;
   }
 
