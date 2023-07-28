@@ -27,7 +27,15 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/user/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/user/**").permitAll()
                 .requestMatchers(HttpMethod.PUT, "/user/**").permitAll()
-                .requestMatchers(HttpMethod.DELETE, "/user/**").permitAll());
+                .requestMatchers(HttpMethod.DELETE, "/user/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/classes/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/classes/**").permitAll()
+                .requestMatchers(HttpMethod.PUT, "/classes/**").permitAll()
+                .requestMatchers(HttpMethod.DELETE, "/classes/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/squad/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/squad/**").permitAll()
+                .requestMatchers(HttpMethod.PUT, "/squad/**").permitAll()
+                .requestMatchers(HttpMethod.DELETE, "/squad/**").permitAll());
 
         // use HTTP Basic authentication
         // http.httpBasic(Customizer.withDefaults());
