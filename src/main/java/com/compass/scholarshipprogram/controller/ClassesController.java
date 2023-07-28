@@ -2,11 +2,14 @@ package com.compass.scholarshipprogram.controller;
 
 import com.compass.scholarshipprogram.model.Classes;
 import com.compass.scholarshipprogram.services.ClassesService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/classes")
 public class ClassesController {
+
+    @Autowired
     private ClassesService classesService;
 
     public ClassesController(ClassesService classesService) {
@@ -25,7 +28,7 @@ public class ClassesController {
         return savedClasses;
     }
 
-    @PutMapping("/save/{id}")
+    @PutMapping("/edit/{id}")
     public Classes update(@PathVariable long id, @RequestBody Classes theClasses) {
 
         Classes existClasses = classesService.findById(id);

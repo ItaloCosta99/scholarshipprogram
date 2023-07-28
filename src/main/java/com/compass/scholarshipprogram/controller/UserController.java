@@ -1,5 +1,6 @@
 package com.compass.scholarshipprogram.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,6 +10,7 @@ import com.compass.scholarshipprogram.services.UserService;
 @RestController
 @RequestMapping("/user")
 public class UserController {
+  @Autowired
   private UserService userService;
 
   public UserController(UserService userService) {
@@ -27,7 +29,7 @@ public class UserController {
     return savedUser;
   }
 
-  @PutMapping("/save/{id}")
+  @PutMapping("/edit/{id}")
   public User updateUsers(@PathVariable long id, @RequestBody User theUser) {
 
     User existUser = userService.findById(id);
@@ -35,6 +37,8 @@ public class UserController {
     existUser.setName(theUser.getName());
     existUser.setCity(theUser.getCity());
     existUser.setRole(theUser.getRole());
+    existUser.setClassId(theUser.getClassId());
+    existUser.setSquadId(theUser.getSquadId());
 
 
     return userService.save(existUser);

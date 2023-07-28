@@ -2,14 +2,9 @@ package com.compass.scholarshipprogram.model;
 
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name = "squads")
@@ -22,16 +17,18 @@ public class Squad {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "squad", cascade={CascadeType.ALL})
-    private List<Classes> classId;
+    @ManyToOne
+    @JoinColumn(name = "class_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Classes classes;
 
     public Squad() {
     }
 
-    public Squad(Long id, String name, List<Classes> classId) {
+    public Squad(Long id, String name, Classes classes) {
         this.id = id;
         this.name = name;
-        this.classId = classId;
+        this.classes = classes;
     }
 
     public Long getId() {
@@ -50,12 +47,12 @@ public class Squad {
         this.name = name;
     }
 
-    public List<Classes> getClassId() {
-        return classId;
+    public Classes getClassId() {
+        return classes;
     }
 
-    public void setClassId(List<Classes> classId) {
-        this.classId = classId;
+    public void setClassId(Classes classes) {
+        this.classes = classes;
     }
 
     @Override
@@ -63,8 +60,7 @@ public class Squad {
         return "Squad{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", classId=" + classId +
+                ", classes=" + classes +
                 '}';
     }
-
 }
