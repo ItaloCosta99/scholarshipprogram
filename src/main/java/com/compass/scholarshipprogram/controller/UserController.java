@@ -16,18 +16,18 @@ public class UserController {
   }
 
   @GetMapping("/all")
-  public Iterable<User> hello() {
+  public Iterable<User> listUsers() {
     return userService.findAll();
   }
 
   @PostMapping("/save")
-  public User save(@RequestBody User user) {
+  public User saveUsers(@RequestBody User user) {
     User savedUser = userService.save(user);
     return savedUser;
   }
 
   @PutMapping("/save/{id}")
-  public User update(@PathVariable long id, @RequestBody User theUser) {
+  public User updateUsers(@PathVariable long id, @RequestBody User theUser) {
 
     User existUser = userService.findById(id);
 
@@ -40,7 +40,7 @@ public class UserController {
   }
 
   @DeleteMapping("/delete/{id}")
-  public void delete(@PathVariable long id) {
+  public void deleteUsers(@PathVariable long id) {
     userService.deleteById(id);
   }
 
