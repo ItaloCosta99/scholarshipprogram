@@ -1,7 +1,18 @@
 package com.compass.scholarshipprogram.controller;
 
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.compass.scholarshipprogram.model.User;
 import com.compass.scholarshipprogram.services.UserService;
@@ -11,19 +22,25 @@ import com.compass.scholarshipprogram.services.UserService;
 public class UserController {
   private UserService userService;
 
+  @Autowired
   public UserController(UserService userService) {
     this.userService = userService;
   }
 
+  @GetMapping("/hello")
+  public String hello() {
+    return "Hello World!";
+  }
+
   @GetMapping("/all")
-  public Iterable<User> listUsers() {
+  public List<User> listUsers() {
     return userService.findAll();
   }
 
   @PostMapping("/save")
-  public User saveUsers(@RequestBody User user) {
+  public ResponseEntity<User> saveUsers(@RequestBody User user) {
     User savedUser = userService.save(user);
-    return savedUser;
+    return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
   }
 
   @PutMapping("/save/{id}")
@@ -34,7 +51,6 @@ public class UserController {
     existUser.setName(theUser.getName());
     existUser.setCity(theUser.getCity());
     existUser.setRole(theUser.getRole());
-
 
     return userService.save(existUser);
   }

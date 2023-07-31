@@ -1,11 +1,13 @@
 package com.compass.scholarshipprogram.services;
 
+import java.util.List;
+
 import com.compass.scholarshipprogram.model.User;
 
 public interface UserService {
   User save(User user);
 
-  Iterable<User> findAll();
+  List<User> findAll();
 
   User findById(long theId);
 

@@ -1,11 +1,13 @@
 package com.compass.scholarshipprogram.services;
 
-import com.compass.scholarshipprogram.model.Classes;
-import com.compass.scholarshipprogram.repositories.ClassesRepository;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import com.compass.scholarshipprogram.model.Classes;
+import com.compass.scholarshipprogram.repositories.ClassesRepository;
 
 @Service
 @Component
@@ -23,7 +25,7 @@ public class ClassesServiceImpl implements ClassesService {
     }
 
     @Override
-    public Iterable<Classes> findAll() {
+    public List<Classes> findAll() {
         return classesRepository.findAll();
     }
 

@@ -1,12 +1,13 @@
 package com.compass.scholarshipprogram.services;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.compass.scholarshipprogram.model.User;
 import com.compass.scholarshipprogram.repositories.UserRepository;
-
-import java.util.Optional;
 
 @Service
 @Component
@@ -23,7 +24,7 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public Iterable<User> findAll() {
+  public List<User> findAll() {
     return userRepository.findAll();
   }
 
@@ -38,8 +39,7 @@ public class UserServiceImpl implements UserService {
       theUser.setName(result.get().getName());
       theUser.setCity(result.get().getCity());
       theUser.setRole(result.get().getRole());
-    }
-    else {
+    } else {
 
       throw new RuntimeException("Did not find user id - " + theId);
     }
@@ -48,7 +48,8 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public void deleteById(long theId) { userRepository.deleteById(theId); }
-
+  public void deleteById(long theId) {
+    userRepository.deleteById(theId);
+  }
 
 }
