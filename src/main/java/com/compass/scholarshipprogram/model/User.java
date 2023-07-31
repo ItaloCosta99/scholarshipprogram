@@ -5,19 +5,6 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "users")
 public class User {
-  /*
-   * Id (int)
-   * 
-   * Nome (string)
-   * 
-   * Cidade (string)
-   * 
-   * Função (string)
-   * 
-   * Turma_Id
-   * 
-   * Squad_Id
-   */
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "user_id")
@@ -34,21 +21,21 @@ public class User {
 
   @ManyToOne
   @JoinColumn(name = "class_id")
-  private Classes classId;
+  private Classes classes;
 
   @ManyToOne
   @JoinColumn(name = "squad_id")
-  private Squad squadId;
+  private Squad squad;
 
   public User() {
   }
 
-  public User(String name, String city, String role, Classes classId, Squad squadId) {
+  public User(String name, String city, String role, Classes classes, Squad squad) {
     this.name = name;
     this.city = city;
     this.role = role;
-    this.classId = classId;
-    this.squadId = squadId;
+    this.classes = classes;
+    this.squad = squad;
   }
 
   public Long getId() {
@@ -84,25 +71,25 @@ public class User {
   }
 
   public Classes getClassId() {
-    return classId;
+    return classes;
   }
 
-  public void setClassId(Classes classId) {
-    this.classId = classId;
+  public void setClassId(Classes classes) {
+    this.classes = classes;
   }
 
   public Squad getSquadId() {
-    return squadId;
+    return squad;
   }
 
   public void setSquadId(Squad squadId) {
-    this.squadId = squadId;
+    this.squad = squadId;
   }
 
   @Override
   public String toString() {
-    return "User [id=" + id + ", name=" + name + ", city=" + city + ", role=" + role + ", classId=" + classId
-        + ", squadId=" + squadId + "]";
+    return "User [id=" + id + ", name=" + name + ", city=" + city + ", role=" + role + ", classId=" + classes
+        + ", squadId=" + squad + "]";
   }
 
 }

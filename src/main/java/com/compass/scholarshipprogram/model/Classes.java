@@ -2,20 +2,18 @@ package com.compass.scholarshipprogram.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "classes")
 public class Classes {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Column(name="class_id")
+    @Column(name = "class_id")
     private Long id;
 
-    @Column(name="name")
+    @Column(name = "name")
     private String name;
-
-    @ManyToOne
-    @JoinColumn(name="squad_id", nullable=false)
-    private Squad squad;
 
     public Classes() {
     }
