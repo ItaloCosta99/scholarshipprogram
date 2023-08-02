@@ -1,14 +1,17 @@
 package com.compass.scholarshipprogram.model;
 
-import jakarta.persistence.*;
-
-import java.util.List;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "classes")
 public class Classes {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "class_id")
     private Long id;
 
@@ -41,9 +44,7 @@ public class Classes {
 
     @Override
     public String toString() {
-        return "Classes{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
+        return "Classes [id=" + id + ", name=" + name + "]";
     }
+
 }

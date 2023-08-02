@@ -57,10 +57,7 @@ public class Squad {
 
     @Override
     public String toString() {
-        return "Squad{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", classes=" + classes +
-                '}';
+        return "Squad [id=" + id + ", name=" + name + ", classes=" + classes + "]";
     }
+
 }
