@@ -81,23 +81,21 @@ class UserControllerTest {
     // then
     mockMvc.perform(post("/user/save").contentType(MediaType.APPLICATION_JSON).content(jsonToString(user)))
         .andExpect(status().isCreated()).andExpect(jsonPath("$.id", is(1)))
-        .andExpect(jsonPath("$[0].name", is("test"))).andExpect(jsonPath("$[0].city", is("test")))
-        .andExpect(jsonPath("$[0].role", is("test")))
-        .andExpect(jsonPath("$[0].classId.id", is(classes.getId().intValue())))
-        .andExpect(jsonPath("$[0].classId.name", is(classes.getName())))
-        .andExpect(jsonPath("$[0].squadId.id", is(squad.getId().intValue())))
-        .andExpect(jsonPath("$[0].squadId.name", is(squad.getName())))
-        .andExpect(jsonPath("$.squadId", is(squad))).andExpect(content().contentType(MediaType.APPLICATION_JSON));
+        .andExpect(jsonPath("$.name", is("test"))).andExpect(jsonPath("$.city", is("test")))
+        .andExpect(jsonPath("$.role", is("test")))
+        .andExpect(jsonPath("$.classId.id", is(classes.getId().intValue())))
+        .andExpect(jsonPath("$.classId.name", is(classes.getName())))
+        .andExpect(jsonPath("$.squadId.id", is(squad.getId().intValue())))
+        .andExpect(jsonPath("$.squadId.name", is(squad.getName())))
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON));
   }
 
   @Test
   void testUpdateUsers() throws Exception {
     // when
     given(userService.save(any())).willReturn(user);
-    User savedUser = userService.save(user);
-    savedUser.setId(1L);
     // then
-    mockMvc.perform(put("/user/edit/1").contentType(MediaType.APPLICATION_JSON).content(jsonToString(savedUser)))
+    mockMvc.perform(put("/user/edit/{id}", user.getId()).contentType(MediaType.APPLICATION_JSON).content(jsonToString(user)))
         .andExpect(status().isOk()).andExpect(jsonPath("$.id", is(1))).andExpect(jsonPath("$.name", is("test")))
         .andExpect(jsonPath("$.city", is("test"))).andExpect(jsonPath("$.role", is("test")))
         .andExpect(jsonPath("$.classId", is(classes))).andExpect(jsonPath("$.squadId", is(squad)))
