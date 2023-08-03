@@ -59,7 +59,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.DELETE, "/squad/delete/{id}").hasRole("master"));
 
         // use HTTP Basic authentication
-        // http.httpBasic(Customizer.withDefaults());
+         http.httpBasic(Customizer.withDefaults());
 
         // disable Cross Site Request Forgery (CSRF)
         // in general, not required for stateless REST APIs that use POST, PUT, DELETE
