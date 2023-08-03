@@ -95,18 +95,25 @@ class UserControllerTest {
     // when
     given(userService.save(any())).willReturn(user);
     // then
-    mockMvc.perform(put("/user/edit/{id}", user.getId()).contentType(MediaType.APPLICATION_JSON).content(jsonToString(user)))
+    mockMvc
+        .perform(
+            put("/user/edit/{id}", user.getId()).contentType(MediaType.APPLICATION_JSON).content(jsonToString(user)))
         .andExpect(status().isOk()).andExpect(jsonPath("$.id", is(1))).andExpect(jsonPath("$.name", is("test")))
         .andExpect(jsonPath("$.city", is("test"))).andExpect(jsonPath("$.role", is("test")))
-        .andExpect(jsonPath("$.classId", is(classes))).andExpect(jsonPath("$.squadId", is(squad)))
+        .andExpect(jsonPath("$.classId.id", is(classes.getId().intValue())))
+        .andExpect(jsonPath("$.classId.name", is(classes.getName())))
+        .andExpect(jsonPath("$.squadId.id", is(squad.getId().intValue())))
+        .andExpect(jsonPath("$.squadId.name", is(squad.getName())))
         .andExpect(content().contentType(MediaType.APPLICATION_JSON));
   }
+
   private static String jsonToString(final Object obj) {
     try {
-      return com.fasterxml.jackson.databind.ObjectMapper.class.getDeclaredConstructor().newInstance().writeValueAsString(obj);
+      return com.fasterxml.jackson.databind.ObjectMapper.class.getDeclaredConstructor().newInstance()
+          .writeValueAsString(obj);
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
   }
-  
+
 }
