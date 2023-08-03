@@ -3,6 +3,9 @@ package com.compass.scholarshipprogram.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,36 +35,48 @@ public class SquadController {
         this.classesService = classesService;
     }
 
-
     @GetMapping("/all")
     public List<Squad> listSquads() {
         return squadService.findAll();
     }
 
     @PostMapping("/save/{classesId}")
-    public Squad saveSquads(@RequestBody Squad squad, @PathVariable Long classesId) {
+    public ResponseEntity<Squad> saveSquads(@RequestBody Squad squad, @PathVariable Long classesId) {
+        Classes existsClasses;
+        Squad savedSquad;
+        try {
+            existsClasses = classesService.findById(classesId);
+            squad.setClassId(existsClasses);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        savedSquad = squadService.save(squad);
 
-        Classes existsClasses = classesService.findById(classesId);
-        System.out.println(squad);
-
-        squad.setClassId(existsClasses);
-        Squad savedSquad = squadService.save(squad);
-
-
-        return savedSquad;
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedSquad);
     }
 
     @PutMapping("/edit/{id}")
-    public Squad updateSquads(@PathVariable long id, @RequestBody Squad theSquad) {
+    public ResponseEntity<Squad> updateSquads(@PathVariable long id, @RequestBody Squad theSquad) {
+        Squad existSquad;
+        try {
+            existSquad = squadService.findById(id);
+            existSquad.setName(theSquad.getName());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
 
-        Squad existSquad = squadService.findById(id);
-
-        existSquad.setName(theSquad.getName());
-
-
-        return squadService.save(existSquad);
+        return ResponseEntity.status(HttpStatus.OK).body(squadService.save(existSquad));
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteSquads(@PathVariable long id) { squadService.deleteById(id); }
+    public ResponseEntity<Squad> deleteSquads(@PathVariable long id) {
+        try {
+            if (squadService.findById(id) != null) {
+                squadService.deleteById(id);
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
 }

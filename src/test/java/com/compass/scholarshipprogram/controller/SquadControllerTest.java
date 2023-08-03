@@ -46,7 +46,7 @@ public class SquadControllerTest {
   void testDeleteSquads() throws Exception {
     squadService.deleteById(1L);
     // then
-    verify(squadService).deleteById(1L);
+    mockMvc.perform(delete("/squad/delete/{id}", 1L)).andExpect(status().isOk());
   }
 
   @Test
@@ -67,7 +67,7 @@ public class SquadControllerTest {
     // when
     given(squadService.save(any())).willReturn(squad);
     // then
-    mockMvc.perform(post("/squad/save").contentType(MediaType.APPLICATION_JSON).content(jsonToString(squad)))
+    mockMvc.perform(post("/squad/save/{classesId}", classes.getId()).contentType(MediaType.APPLICATION_JSON).content(jsonToString(squad)))
         .andExpect(status().isCreated()).andExpect(jsonPath("$.id", is(1)))
         .andExpect(jsonPath("$[0].name", is("test")))
         .andExpect(jsonPath("$[0].classId.id", is(classes.getId().intValue())))
@@ -80,7 +80,7 @@ public class SquadControllerTest {
     // when
     given(squadService.save(any())).willReturn(squad);
     // then
-    mockMvc.perform(put("/squad/update").contentType(MediaType.APPLICATION_JSON).content(jsonToString(squad)))
+    mockMvc.perform(put("/squad/update{classesId}", classes.getId()).contentType(MediaType.APPLICATION_JSON).content(jsonToString(squad)))
         .andExpect(status().isOk()).andExpect(jsonPath("$.id", is(1)))
         .andExpect(jsonPath("$[0].name", is("test")))
         .andExpect(jsonPath("$[0].classId.id", is(classes.getId().intValue())))

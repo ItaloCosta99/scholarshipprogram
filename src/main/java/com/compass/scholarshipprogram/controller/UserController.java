@@ -35,12 +35,10 @@ public class UserController {
   @PostMapping("/save")
   public ResponseEntity<User> saveUsers(@RequestBody User user) {
     User savedUser = null;
-    System.out.println(user);
     try {
       savedUser = userService.save(user);
     } catch (Exception e) {
-      // TODO: handle exception
-      throw new RuntimeException("Error: " + e.getMessage());
+      return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
     }
     return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
   }

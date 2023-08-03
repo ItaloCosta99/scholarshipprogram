@@ -64,18 +64,17 @@ public class ClassesControllerTest {
     // then
     mockMvc.perform(post("/classes/save").contentType(MediaType.APPLICATION_JSON).content(jsonToString(classes)))
         .andExpect(status().isCreated()).andExpect(jsonPath("$.id", is(1)))
-        .andExpect(jsonPath("$[0].name", is("test"))).andExpect(content().contentType(MediaType.APPLICATION_JSON));
+        .andExpect(jsonPath("$.name", is("test"))).andExpect(content().contentType(MediaType.APPLICATION_JSON));
   }
 
   @Test
   void testUpdate() throws Exception {
     // when
     given(classesService.save(any())).willReturn(classes);
-    Classes savedClasses = classesService.save(classes);
     // then
-    mockMvc.perform(put("/classes/update").contentType(MediaType.APPLICATION_JSON).content(jsonToString(classes)))
+    mockMvc.perform(put("/classes/edit/{id}", classes.getId()).contentType(MediaType.APPLICATION_JSON).content(jsonToString(classes)))
         .andExpect(status().isOk()).andExpect(jsonPath("$.id", is(1)))
-        .andExpect(jsonPath("$[0].name", is("test"))).andExpect(content().contentType(MediaType.APPLICATION_JSON));
+        .andExpect(jsonPath("$.name", is("test"))).andExpect(content().contentType(MediaType.APPLICATION_JSON));
 
   }
 
