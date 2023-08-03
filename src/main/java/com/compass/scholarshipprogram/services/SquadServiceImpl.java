@@ -3,14 +3,12 @@ package com.compass.scholarshipprogram.services;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.compass.scholarshipprogram.model.Squad;
 import com.compass.scholarshipprogram.repositories.SquadRepository;
 
 @Service
-@Component
 public class SquadServiceImpl implements SquadService{
 
     private final SquadRepository squadRepository;

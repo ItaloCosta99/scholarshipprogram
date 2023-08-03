@@ -21,17 +21,10 @@ import com.compass.scholarshipprogram.services.UserService;
 @RestController
 @RequestMapping("/user")
 public class UserController {
-  @Autowired
   private UserService userService;
 
-  @Autowired
   public UserController(UserService userService) {
     this.userService = userService;
-  }
-
-  @GetMapping("/hello")
-  public String hello() {
-    return "Hello World!";
   }
 
   @GetMapping("/all")
@@ -41,12 +34,19 @@ public class UserController {
 
   @PostMapping("/save")
   public ResponseEntity<User> saveUsers(@RequestBody User user) {
-    User savedUser = userService.save(user);
+    User savedUser = null;
+    System.out.println(user);
+    try {
+      savedUser = userService.save(user);
+    } catch (Exception e) {
+      // TODO: handle exception
+      throw new RuntimeException("Error: " + e.getMessage());
+    }
     return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
   }
 
   @PutMapping("/edit/{id}")
-  public User updateUsers(@PathVariable long id, @RequestBody User theUser) {
+  public ResponseEntity<User> updateUsers(@PathVariable long id, @RequestBody User theUser) {
 
     User existUser = userService.findById(id);
 
@@ -56,13 +56,13 @@ public class UserController {
     existUser.setClassId(theUser.getClassId());
     existUser.setSquadId(theUser.getSquadId());
 
-
-    return userService.save(existUser);
+    return ResponseEntity.ok(userService.save(existUser));
   }
 
   @DeleteMapping("/delete/{id}")
-  public void deleteUsers(@PathVariable long id) {
+  public ResponseEntity<User> deleteUsers(@PathVariable long id) {
     userService.deleteById(id);
+    return ResponseEntity.ok().build();
   }
 
 }

@@ -10,7 +10,6 @@ import com.compass.scholarshipprogram.model.Classes;
 import com.compass.scholarshipprogram.repositories.ClassesRepository;
 
 @Service
-@Component
 public class ClassesServiceImpl implements ClassesService {
 
     private final ClassesRepository classesRepository;
